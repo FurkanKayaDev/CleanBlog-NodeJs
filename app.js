@@ -26,6 +26,13 @@ app.get("/", async (req, res) => {
   res.render("index", { posts });
 });
 
+// asenkron olarak çalıştırılması gerek!
+app.get("/post/:id", async (req, res) => {
+  // :id ile gelen id yi al
+  const id = req.params.id;
+  const post = await Post.findById(id);
+  res.render("post", { post });
+});
 app.get("/about", (req, res) => {
   res.render("about");
 });
