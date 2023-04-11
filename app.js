@@ -15,10 +15,13 @@ app.set("view engine", "ejs");
 
 // MIDDLEWARE
 app.use(express.static("public"));
+// eklenen verileri json formatında almak için bunlar kullanılır
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 //ROUTES
 app.get("/", async (req, res) => {
+  // db deki tüm postları al ve posts değişkenine atayıp index.ejs ye gönder
   const posts = await Post.find({});
   res.render("index", { posts });
 });
@@ -34,10 +37,9 @@ app.get("/add_post", (req, res) => {
 app.get("/post", (req, res) => {
   res.render("post");
 });
-
+// add action ile gelen verileri db ye Post modeli ile kaydet
 app.post("/add", async (req, res) => {
   await Post.create(req.body);
-  console.log(req.body);
   res.redirect("/");
 });
 
